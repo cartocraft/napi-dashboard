@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+  <meta charset="UTF-8">
+  <title>नापी Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <h1>नापी कार्यालय Dashboard</h1>
+    <div id="date"></div>
+  </header>
+
+  <div class="grid">
+
+    <div class="card queue">
+      <h2>Queue</h2>
+      <div id="current">A-102</div>
+      <div>Next: <span id="next">A-103</span></div>
+    </div>
+
+    <div class="card map">
+      <h2>Live Map</h2>
+      <iframe 
+        src="https://your-geoserver-url/wms" 
+        frameborder="0">
+      </iframe>
+    </div>
+
+    <div class="card stats">
+      <h2>Today Stats</h2>
+      <p>Processed: <span id="processed">45</span></p>
+      <p>Pending: <span id="pending">12</span></p>
+    </div>
+
+    <div class="card notice">
+      <marquee id="notice">
+        कृपया आवश्यक कागजात लिएर आउनुहोस् | System maintenance 3 बजे हुनेछ
+      </marquee>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
