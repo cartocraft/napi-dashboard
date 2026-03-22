@@ -1,41 +1,38 @@
-body {
-  margin: 0;
-  font-family: sans-serif;
-  background: #111;
-  color: white;
+// Date
+document.getElementById("date").innerText =
+  new Date().toLocaleDateString("ne-NP");
+
+// Leaflet Map (Udaypur approx center)
+var map = L.map('map').setView([26.8, 86.7], 10);
+
+// Base map
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
+  .addTo(map);
+
+// OPTIONAL: GeoServer WMS (replace with your server)
+var wmsLayer = L.tileLayer.wms("https://your-server/geoserver/napi/wms", {
+  layers: "napi:parcels",
+  format: "image/png",
+  transparent: true
+}).addTo(map);
+
+// Auto refresh map (live feel)
+setInterval(() => {
+  wmsLayer.setParams({ _t: Date.now() });
+}, 5000);
+
+
+// Queue (demo - later API)
+async function loadData() {
+  const data = {
+    current: "A-105",
+    next: "A-106"
+  };
+
+  document.getElementById("current").innerText = data.current;
+  document.getElementById("next").innerText = data.next;
 }
 
-.container {
-  padding: 20px;
-}
-
-header {
-  display: flex;
-  justify-content: space-between;
-  font-size: 24px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  grid-template-rows: auto auto;
-  gap: 15px;
-  margin-top: 20px;
-}
-
-.card {
-  background: #222;
-  padding: 15px;
-  border-radius: 10px;
-}
-
-.queue #current {
-  font-size: 40px;
-  font-weight: bold;
-}
-
-#map {
-  width: 100%;
-  height: 350px;
-  border-radius: 10px;
-}
+// refresh queue
+setInterval(loadData, 5000);
+loadData();
