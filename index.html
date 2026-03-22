@@ -2,43 +2,52 @@
 <html lang="ne">
 <head>
   <meta charset="UTF-8">
-  <title>नापी Dashboard</title>
+  <title>नापी कार्यालय उदयपुर</title>
   <link rel="stylesheet" href="style.css">
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
 
 <div class="container">
 
   <header>
-    <h1>नापी कार्यालय Dashboard</h1>
+    <h1>नापी कार्यालय उदयपुर</h1>
     <div id="date"></div>
   </header>
 
   <div class="grid">
 
+    <!-- Progress Section -->
+    <div class="card progress">
+      <h2>आजको प्रगतिः</h2>
+      <p>कित्ताकाट - ६</p>
+      <p>नक्सा प्रिन्ट - २३</p>
+      <p>क्षेत्रफल जाँच - २</p>
+      <p>फिल्ड रेखांकन - २</p>
+      <p>कित्ता एकिकरण - १</p>
+      <p>राजश्व संकलन - रु २४,०८९</p>
+    </div>
+
+    <!-- Map Section -->
+    <div class="card map">
+      <h2>उदयपुर जिल्ला नक्सा</h2>
+      <div id="map"></div>
+    </div>
+
+    <!-- Queue -->
     <div class="card queue">
       <h2>Queue</h2>
       <div id="current">A-102</div>
       <div>Next: <span id="next">A-103</span></div>
     </div>
 
-    <div class="card map">
-      <h2>Live Map</h2>
-      <iframe 
-        src="https://your-geoserver-url/wms" 
-        frameborder="0">
-      </iframe>
-    </div>
-
-    <div class="card stats">
-      <h2>Today Stats</h2>
-      <p>Processed: <span id="processed">45</span></p>
-      <p>Pending: <span id="pending">12</span></p>
-    </div>
-
+    <!-- Notice -->
     <div class="card notice">
-      <marquee id="notice">
-        कृपया आवश्यक कागजात लिएर आउनुहोस् | System maintenance 3 बजे हुनेछ
+      <marquee>
+        कृपया आवश्यक कागजात लिएर आउनुहोस् | सेवा समय: १०-५
       </marquee>
     </div>
 
