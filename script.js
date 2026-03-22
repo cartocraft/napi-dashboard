@@ -1,28 +1,34 @@
-// Date display
-document.getElementById("date").innerText =
-  new Date().toLocaleDateString();
+// BS Date + Time
+function updateDateTime() {
+  const now = new Date();
 
-// Simulated API fetch
-async function loadData() {
-  try {
-    // Replace with your backend later
-    const data = {
-      current: "A-105",
-      next: "A-106",
-      processed: 52,
-      pending: 9
-    };
+  const time = now.toLocaleTimeString("ne-NP", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit"
+  });
 
-    document.getElementById("current").innerText = data.current;
-    document.getElementById("next").innerText = data.next;
-    document.getElementById("processed").innerText = data.processed;
-    document.getElementById("pending").innerText = data.pending;
+  const bsDate = NepaliDate.fromAD(now);
+  const bsFormatted = bsDate.format("YYYY MMMM DD");
 
-  } catch (err) {
-    console.error(err);
-  }
+  document.getElementById("datetime").innerText =
+    bsFormatted + " | " + time;
 }
 
-// Refresh every 10 sec
-setInterval(loadData, 10000);
+setInterval(updateDateTime, 1000);
+updateDateTime();
+
+
+// Queue (later connect API)
+async function loadData() {
+  const data = {
+    current: "A-105",
+    next: "A-106"
+  };
+
+  document.getElementById("current").innerText = data.current;
+  document.getElementById("next").innerText = data.next;
+}
+
+setInterval(loadData, 5000);
 loadData();
