@@ -39,9 +39,13 @@
   <!-- Map -->
   <div class="card">
     <h2>उदयपुर जिल्ला नक्सा</h2>
-    <img src="assets/Udaypur-map.jpg"
+  <div class="map-container">
+    <img src="assets/udaypur.jpg"
          class="map-img"
-         onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/3/32/Nepal_districts_map.png';">
+         onerror="this.style.display='none'; document.getElementById('map-placeholder').style.display='flex';">
+
+    <div id="map-placeholder" class="placeholder">
+      <span>नक्सा उपलब्ध छैन</span>
   </div>
 
   <!-- Queue -->
