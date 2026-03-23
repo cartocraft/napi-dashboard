@@ -1,33 +1,37 @@
-// BS Date + Time
 function updateDateTime() {
-  const now = new Date();
+  try {
+    const now = new Date();
 
-  const time = now.toLocaleTimeString("ne-NP", {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit"
-  });
+    const time = now.toLocaleTimeString("ne-NP");
 
-  const bsDate = NepaliDate.fromAD(now);
-  const bsFormatted = bsDate.format("YYYY MMMM DD");
+    let dateText = "";
 
-  document.getElementById("datetime").innerText =
-    bsFormatted + " | " + time;
+    // Try Nepali date
+    if (typeof NepaliDate !== "undefined") {
+      const bsDate = NepaliDate.fromAD(now);
+      dateText = bsDate.format("YYYY MMMM DD");
+    } else {
+      // fallback AD
+      dateText = now.toLocaleDateString("ne-NP");
+    }
+
+    document.getElementById("datetime").innerText =
+      dateText + " | " + time;
+
+  } catch (e) {
+    document.getElementById("datetime").innerText =
+      new Date().toLocaleString();
+  }
 }
 
 setInterval(updateDateTime, 1000);
 updateDateTime();
 
 
-// Queue (later connect API)
-async function loadData() {
-  const data = {
-    current: "A-105",
-    next: "A-106"
-  };
-
-  document.getElementById("current").innerText = data.current;
-  document.getElementById("next").innerText = data.next;
+// Queue demo
+function loadData() {
+  document.getElementById("current").innerText = "A-105";
+  document.getElementById("next").innerText = "A-106";
 }
 
 setInterval(loadData, 5000);
