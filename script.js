@@ -1,38 +1,30 @@
 function updateDateTime() {
+  const now = new Date();
+
+  const time = now.toLocaleTimeString("ne-NP", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit"
+  });
+
+  let dateText = "मिति लोड हुँदैछ...";
+
   try {
-    const now = new Date();
-
-    const time = now.toLocaleTimeString("ne-NP");
-
-    let dateText = "";
-
-    // Try Nepali date
     if (typeof NepaliDate !== "undefined") {
       const bsDate = NepaliDate.fromAD(now);
+
+      // Nepali format (YYYY MMMM DD)
       dateText = bsDate.format("YYYY MMMM DD");
     } else {
-      // fallback AD
-      dateText = now.toLocaleDateString("ne-NP");
+      dateText = "BS लोड भएन";
     }
-
-    document.getElementById("datetime").innerText =
-      dateText + " | " + time;
-
   } catch (e) {
-    document.getElementById("datetime").innerText =
-      new Date().toLocaleString();
+    dateText = "मिति त्रुटि";
   }
+
+  document.getElementById("datetime").innerText =
+    dateText + " | " + time;
 }
 
 setInterval(updateDateTime, 1000);
 updateDateTime();
-
-
-// Queue demo
-function loadData() {
-  document.getElementById("current").innerText = "A-105";
-  document.getElementById("next").innerText = "A-106";
-}
-
-setInterval(loadData, 5000);
-loadData();
