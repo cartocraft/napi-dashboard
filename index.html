@@ -4,22 +4,20 @@
   <meta charset="UTF-8">
   <title>नापी कार्यालय उदयपुर</title>
   <link rel="stylesheet" href="style.css">
-
-  <!-- Nepali Date -->
-  <script src="https://cdn.jsdelivr.net/npm/nepali-date-converter/dist/nepali-date-converter.min.js"></script>
 </head>
+
 <body>
 
 <header class="header">
 
-  <img src="assets/nepal-flag.gif" class="flag" />
+  <img src="assets/nepal-flag.svg" class="flag" />
 
   <div class="title">
     <h1>नापी कार्यालय उदयपुर</h1>
-    <div id="datetime">Loading...</div>
+    <div id="datetime">लोड हुँदैछ...</div>
   </div>
 
-  <img src="assets/Emblem_of_Nepal.png" class="logo" />
+  <img src="assets/logo.png" class="logo" />
 
 </header>
 
@@ -39,13 +37,16 @@
   <!-- Map -->
   <div class="card">
     <h2>उदयपुर जिल्ला नक्सा</h2>
-  <div class="map-container">
-    <img src="assets/udaypur.jpg"
-         class="map-img"
-         onerror="this.style.display='none'; document.getElementById('map-placeholder').style.display='flex';">
 
-    <div id="map-placeholder" class="placeholder">
-      <span>नक्सा उपलब्ध छैन</span>
+    <div class="map-container">
+      <img src="assets/udaypur.jpg" class="map-img"
+           onerror="this.style.display='none'; document.getElementById('placeholder').style.display='flex';">
+
+      <div id="placeholder" class="placeholder">
+        नक्सा उपलब्ध छैन
+      </div>
+    </div>
+
   </div>
 
   <!-- Queue -->
@@ -58,5 +59,6 @@
 </div>
 
 <script src="script.js"></script>
+
 </body>
 </html>
