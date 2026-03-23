@@ -12,25 +12,21 @@
 
 <header class="header">
 
-  <div class="flag-container">
-    <img src="assets/nepal-flag.gif" class="flag" />
-  </div>
+  <img src="assets/nepal-flag.svg" class="flag" />
 
   <div class="title">
     <h1>नापी कार्यालय उदयपुर</h1>
-    <div id="datetime"></div>
+    <div id="datetime">Loading...</div>
   </div>
 
-  <div class="logo-container">
-    <img src="assets/Emblem_of_Nepal.png" class="logo" />
-  </div>
+  <img src="assets/logo.png" class="logo" />
 
 </header>
 
 <div class="grid">
 
   <!-- Progress -->
-  <div class="card progress">
+  <div class="card">
     <h2>आजको प्रगतिः</h2>
     <p>कित्ताकाट - ६</p>
     <p>नक्सा प्रिन्ट - २३</p>
@@ -40,24 +36,19 @@
     <p>राजश्व संकलन - रु २४,०८९</p>
   </div>
 
-  <!-- JPG Map -->
-  <div class="card map">
+  <!-- Map -->
+  <div class="card">
     <h2>उदयपुर जिल्ला नक्सा</h2>
-    <img src="assets/Udaypur-map.jpg" class="map-img" />
+    <img src="assets/udaypur.jpg"
+         class="map-img"
+         onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/3/32/Nepal_districts_map.png';">
   </div>
 
   <!-- Queue -->
-  <div class="card queue">
+  <div class="card">
     <h2>Queue</h2>
     <div id="current">A-102</div>
     <div>Next: <span id="next">A-103</span></div>
-  </div>
-
-  <!-- Notice -->
-  <div class="card notice">
-    <marquee>
-      कृपया आवश्यक कागजात लिएर आउनुहोस् | सेवा समय: १०-५
-    </marquee>
   </div>
 
 </div>
