@@ -1,30 +1,38 @@
-function updateDateTime() {
+// Simple BS conversion (approx but stable)
+function getBSDate() {
+  const months = [
+    "बैशाख","जेठ","असार","श्रावण","भदौ","असोज",
+    "कार्तिक","मंसिर","पौष","माघ","फागुन","चैत"
+  ];
+
   const now = new Date();
 
-  const time = now.toLocaleTimeString("ne-NP", {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit"
-  });
+  // rough BS conversion (offset method)
+  const bsYear = now.getFullYear() + 57;
+  const bsMonth = now.getMonth();
+  const bsDay = now.getDate();
 
-  let dateText = "मिति लोड हुँदैछ...";
+  return `${bsYear} ${months[bsMonth]} ${bsDay}`;
+}
 
-  try {
-    if (typeof NepaliDate !== "undefined") {
-      const bsDate = NepaliDate.fromAD(now);
+function updateDateTime() {
+  const time = new Date().toLocaleTimeString("ne-NP");
 
-      // Nepali format (YYYY MMMM DD)
-      dateText = bsDate.format("YYYY MMMM DD");
-    } else {
-      dateText = "BS लोड भएन";
-    }
-  } catch (e) {
-    dateText = "मिति त्रुटि";
-  }
+  const date = getBSDate();
 
   document.getElementById("datetime").innerText =
-    dateText + " | " + time;
+    date + " | " + time;
 }
 
 setInterval(updateDateTime, 1000);
 updateDateTime();
+
+
+// Queue demo
+function loadData() {
+  document.getElementById("current").innerText = "A-105";
+  document.getElementById("next").innerText = "A-106";
+}
+
+setInterval(loadData, 5000);
+loadData();
