@@ -26,10 +26,13 @@ body {
   text-align: center;
 }
 
-#datetime {
-  font-size: 18px;
-  color: #0077cc;
-  font-weight: bold;
+.title {
+  text-align: center;
+}
+
+.hamro-date {
+  display: block;
+  margin: auto;
 }
 
 /* Grid */
