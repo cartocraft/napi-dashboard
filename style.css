@@ -26,13 +26,9 @@ body {
   text-align: center;
 }
 
-.title {
-  text-align: center;
-}
-
 .hamro-date {
-  display: block;
-  margin: auto;
+  width: 220px;
+  height: 90px;
 }
 
 /* Grid */
