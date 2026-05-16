@@ -1,71 +1,93 @@
 <!DOCTYPE html>
-<html lang="ne">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>नापी कार्यालय उदयपुर</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cadastral Parcel Map</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css" />
 </head>
+<body class="relative h-screen w-screen overflow-hidden bg-gray-900">
 
-<body>
+    <div id="map" class="absolute inset-0 z-0"></div>
 
-<header class="header">
+    <button id="toggle-sidebar-btn" class="absolute top-4 right-4 z-[1000] bg-white text-gray-700 p-3 rounded-full shadow-lg border border-gray-200 hover:bg-gray-50 hover:text-blue-600 transition-all duration-200 group">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:rotate-90 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+    </button>
 
-  <img src="assets/nepal-flag.gif" class="flag" />
+    <div id="sidebar" class="absolute top-0 left-0 h-full w-full md:w-80 bg-white/95 backdrop-blur-md z-[1010] transform translate-x-0 transition-transform duration-300 ease-in-out shadow-2xl flex flex-col border-r border-gray-200">
+        
+        <div class="flex justify-between items-center p-4 border-b border-gray-200 bg-white">
+            <div>
+                <h1 class="text-lg font-bold text-gray-800">Parcel Query</h1>
+            </div>
+            <button id="close-sidebar-btn" class="text-gray-400 hover:text-red-500 transition-colors p-1 rounded-md hover:bg-gray-100">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
 
-  <div class="title">
-  <h1>नापी कार्यालय उदयपुर</h1>
+        <div class="flex-1 overflow-y-auto p-4 custom-scrollbar">
+            <div class="space-y-3">
+                <select id="vdc-select" class="block w-full rounded-lg border-gray-300 bg-gray-50 text-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2.5 border transition-colors font-medium text-sm" disabled>
+                    <option value="">Loading...</option>
+                </select>
 
-  <!-- Hamro Patro Embed -->
-  <iframe 
-    src="https://www.hamropatro.com/widgets/calender-small.php"
-    class="hamro-date"
-    frameborder="0">
-  </iframe>
+                <select id="ward-select" class="block w-full rounded-lg border-gray-300 bg-gray-50 text-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2.5 border transition-colors font-medium text-sm" disabled>
+                    <option value="">Select Ward No.</option>
+                </select>
 
-</div>
+                <select id="sheet-select" class="block w-full rounded-lg border-gray-300 bg-gray-50 text-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2.5 border transition-colors font-medium text-sm" disabled>
+                    <option value="">Select Sheet No.</option>
+                </select>
 
-  <img src="assets/Emblem_of_Nepal.png" class="logo" />
+                <select id="parcel-select" class="block w-full rounded-lg border-gray-300 bg-gray-50 text-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2.5 border transition-colors font-medium text-sm" disabled>
+                    <option value="">Select Parcel No.</option>
+                </select>
 
-</header>
+                <button id="search-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg shadow-md transition duration-150 mt-2 disabled:bg-gray-400 disabled:cursor-not-allowed flex justify-center items-center gap-2 text-sm" disabled>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                    </svg>
+                    Locate Parcel
+                </button>
+                
+                <div id="error-message" class="hidden text-red-600 text-xs font-medium mt-2 bg-red-50 p-2 rounded-lg border border-red-200"></div>
+            </div>
 
-<div class="grid">
+            <div id="results-panel" class="hidden mt-6 animate-fade-in">
+                <h2 class="text-xs font-bold text-gray-800 border-b pb-1 mb-2 uppercase">Parcel Intelligence</h2>
+                
+                <div class="grid grid-cols-2 gap-2 mb-4">
+                    <div class="bg-gray-50 p-2 rounded-lg border border-gray-200">
+                        <p class="text-[10px] text-gray-500 font-semibold uppercase">Area (B-K-D-K)</p>
+                        <p id="res-area" class="text-blue-700 font-mono font-bold mt-0.5 text-sm"></p>
+                    </div>
+                    <div class="bg-gray-50 p-2 rounded-lg border border-gray-200">
+                        <p class="text-[10px] text-gray-500 font-semibold uppercase">Land Use</p>
+                        <p id="res-lu" class="text-green-700 font-bold mt-0.5 text-sm truncate"></p>
+                    </div>
+                </div>
 
-  <!-- Progress -->
-  <div class="card">
-    <h2>आजको प्रगतिः</h2>
-    <p>कित्ताकाट - ६</p>
-    <p>नक्सा प्रिन्ट - २३</p>
-    <p>क्षेत्रफल जाँच - २</p>
-    <p>फिल्ड रेखांकन - २</p>
-    <p>कित्ता एकिकरण - १</p>
-    <p>राजश्व संकलन - रु २४,०८९</p>
-  </div>
-
-  <!-- Map -->
-  <div class="card">
-    <h2>उदयपुर जिल्ला नक्सा</h2>
-
-    <div class="map-container">
-      <img src="assets/Udayapur-map.jpg" class="map-img"
-           onerror="this.style.display='none'; document.getElementById('placeholder').style.display='flex';">
-
-      <div id="placeholder" class="placeholder">
-        नक्सा उपलब्ध छैन
-      </div>
+                <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 mt-2">
+                    <label class="flex items-center space-x-3 cursor-pointer">
+                        <input type="checkbox" id="toggle-labels" class="form-checkbox h-4 w-4 text-blue-600 rounded focus:ring-blue-500">
+                        <span class="text-sm text-gray-700 font-medium">Show Boundary Lengths</span>
+                    </label>
+                </div>
+            </div>
+        </div>
     </div>
 
-  </div>
-
-  <!-- Queue -->
-  <div class="card">
-    <h2>Queue</h2>
-    <div id="current">A-102</div>
-    <div>Next: <span id="next">A-103</span></div>
-  </div>
-
-</div>
-
-<script src="script.js"></script>
-
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/topojson-client@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+    <script src="app.js" defer></script>
 </body>
 </html>
